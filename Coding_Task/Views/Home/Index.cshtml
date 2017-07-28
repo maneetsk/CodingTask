@@ -1,0 +1,243 @@
+﻿@{
+    ViewBag.Title = "Coding Task";
+}
+
+
+<div class="container margintop20" style="min-height:500px;">
+    <div class="row">
+        <div class="col-md-12  text-center" style="font-size: x-large; ">
+            Generate Sequences
+        </div>
+        <div class="col-md-6 text-center margintop15">
+            <input id="Search" type="number" step="1" name="search" placeholder="Enter a whole number" class="form-control autosuggest ui-autocomplete-input" />
+        </div>
+        <div class="col-md-6 text-center margintop15">
+            <button type="submit" id="Submit" class="btn btn-primary">Get Sequences</button>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <div class="row">
+        <h3>All Numbers</h3>
+        <div class="allnumbers">
+            <ul></ul>
+        </div>
+        <div class="col-md-12 noallnumbers">
+            <span>No numbers to show</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <h3>All Even Numbers</h3>
+        <div class="allevennumbers">
+            <ul></ul>
+        </div>
+        <div class="col-md-12 noallevennumbers">
+            <span>No numbers to show</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <h3>All Odd Numbers</h3>
+        <div class="alloddnumbers">
+            <ul></ul>
+        </div>
+        <div class="col-md-12 noalloddnumbers">
+            <span>No numbers to show</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <h3>Multiples of 3, 5 and 15 Replaced</h3>
+        <div class="allconditionalnumbers">
+            <ul></ul>
+        </div>
+        <div class="col-md-12 noallconditionalnumbers">
+            <span>No numbers to show</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <h3>Fibonacci Series</h3>
+        <div class="fibonacci">
+            <ul></ul>
+        </div>
+        <div class="col-md-12 nofibonacci">
+            <span>No numbers to show</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    var html = '';
+
+    $(document).ready(function () {
+        //$('.SearchReturnedNoResult').hide();
+        //$('.SearchReturnedResults').hide();
+
+
+
+        $('#Submit').click(function () {
+
+            var number = $('#Search').val();
+            if (number.trim().length == 0) {
+                toastr.error('Please provide a number');
+            }
+            else if (number.indexOf('e') >= 0 || number.indexOf('.') >= 0 || number.indexOf('-') >= 0) {
+                toastr.error('Please provide a positive whole number');
+            }
+            else if (parseInt(number) > 5000) {
+                toastr.error('Please provide a number less than 5001');
+            }
+            else {
+                document.getElementById('Progress').style.display = 'block';
+                setTimeout(function () {
+                    var values = {
+                        num: number
+                    }
+
+                    var Data = $.parseJSON(AjaxCallWithDataMVC("@Url.Action("FetchSequences")", values));
+
+                    if (Data.st == 1) {
+                        $(".allnumbers ul").empty();
+                        $(".allevennumbers ul").empty();
+                        $(".alloddnumbers ul").empty();
+                        $(".allconditionalnumbers ul").empty();
+                        $(".fibonacci ul").empty();
+
+                        toastr.success('Sequences fetched successfully.');
+                        var seq = $.parseJSON(Data.msg);
+
+                        // All numbers - Start
+                        if (seq.allnumbers.length > 0) {
+                            $('.noallnumbers').hide();
+                            $('.allnumbers').show();
+                        }
+                        else {
+                            $('.noallnumbers').show();
+                            $('.allnumbers').hide();
+                        }
+                        for (var i = 0; i < seq.allnumbers.length; i++) {
+                            $(".allnumbers ul").append('<li>' + seq.allnumbers[i] + '</li>');
+                        }
+                        // All numbers - End
+
+                        // All even numbers - Start
+                        if (seq.allevennumbers.length > 0) {
+                            $('.noallevennumbers').hide();
+                            $('.allevennumbers').show();
+                        }
+                        else {
+                            $('.noallevennumbers').show();
+                            $('.allevennumbers').hide();
+                        }
+                        for (var i = 0; i < seq.allevennumbers.length; i++) {
+                            $(".allevennumbers ul").append('<li>' + seq.allevennumbers[i] + '</li>');
+                        }
+                        // All even numbers - End
+
+
+                        // All odd numbers - Start
+                        if (seq.alloddnumbers.length > 0) {
+                            $('.noalloddnumbers').hide();
+                            $('.alloddnumbers').show();
+                        }
+                        else {
+                            $('.noalloddnumbers').show();
+                            $('.alloddnumbers').hide();
+                        }
+                        for (var i = 0; i < seq.alloddnumbers.length; i++) {
+                            $(".alloddnumbers ul").append('<li>' + seq.alloddnumbers[i] + '</li>');
+                        }
+                        // All odd numbers - End
+
+
+                        // All conditional numbers - Start
+                        if (seq.allconditionalnumbers.length > 0) {
+                            $('.noallconditionalnumbers').hide();
+                            $('.allconditionalnumbers').show();
+                        }
+                        else {
+                            $('.noallconditionalnumbers').show();
+                            $('.allconditionalnumbers').hide();
+                        }
+                        for (var i = 0; i < seq.allconditionalnumbers.length; i++) {
+                            $(".allconditionalnumbers ul").append('<li>' + seq.allconditionalnumbers[i] + '</li>');
+                        }
+                        // All conditional numbers - End
+
+
+                        // All fibonacci numbers - Start
+                        if (seq.allfibonaccinumbers.length > 0) {
+                            $('.nofibonacci').hide();
+                            $('.fibonacci').show();
+                        }
+                        else {
+                            $('.nofibonacci').show();
+                            $('.fibonacci').hide();
+                        }
+                        for (var i = 0; i < seq.allfibonaccinumbers.length; i++) {
+                            $(".fibonacci ul").append('<li>' + seq.allfibonaccinumbers[i] + '</li>');
+                        }
+                        // All fibonacci numbers - End
+
+
+                    }
+                    else {
+                        $(".allnumbers ul").empty();
+                        $(".allevennumbers ul").empty();
+                        $(".alloddnumbers ul").empty();
+                        $(".allconditionalnumbers ul").empty();
+                        $(".fibonacci ul").empty();
+                        toastr.error(Data.msg);
+                    }
+
+                    document.getElementById('Progress').style.display = 'none';
+                }, 100);
+            }
+            $('#Search').val("");
+        });
+
+
+
+    });
+
+    function GetAllSavedLinks() {
+
+        $("#table tr:not(:first)").remove();
+
+        var table = document.getElementById("table");
+
+        document.getElementById('Progress').style.display = 'block';
+        setTimeout(function () {
+            var Data = $.parseJSON(AjaxCallWithDataMVC("@Url.Action("GetAllSavedUrl")"));
+
+            if (Data.st == 1) {
+                var urls = $.parseJSON(Data.msg);
+
+                if (urls.length == 0) {
+                    $('.SearchReturnedResults').hide();
+                    $('.SearchReturnedNoResult').show();
+                }
+                else {
+                    for (var i = 1; i <= urls.length; i++) {
+
+                        var row = table.insertRow(i);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        cell1.innerHTML = urls[i - 1].sLongURL;
+                        cell2.innerHTML = urls[i - 1].sBitlyURL;
+                    }
+
+                    $('.SearchReturnedResults').show();
+                    $('.SearchReturnedNoResult').hide();
+                }
+            }
+            else
+                toastr.error(Data.msg);
+
+            document.getElementById('Progress').style.display = 'none';
+        }, 100);
+    }
+</script>

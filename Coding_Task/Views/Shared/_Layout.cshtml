@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/responsive.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <link href="~/Content/wSelect.css" rel="stylesheet" />
+    <link href="~/Content/waitingSpinner.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/Jquery1.10.3.js"></script>
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/waitingSpinner.js"></script>
+    <script src="~/Scripts/respond.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container-wrapper">
+
+        <header>
+            <nav class="navbar navbar-inverse">
+                <div class="container" style="border: 0px solid red; background-color: #454343; width: 100%; color: #f5f5f5; ">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <h1><a class="navbar-brand" href="/">Coding Task</a></h1>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav navbar-right margintop5">
+                            <li>
+                                <a style="float:left" href="@Url.Action("Contact", "About", routeValues: null)" title="Contact Us"><i class="fa fa-hand-o-right "></i> Contact</a>
+                            </li>
+                            <li>
+                                <a style="float:left" href="@Url.Action("Index", "About", routeValues: null)" title="About Us"><i class="fa fa-hand-peace-o"></i> About</a>
+                            </li>
+                            <li class="padding12">
+                                <i class="fa fa-phone"></i> 1800-123-4321
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+        </header>
+
+        @RenderBody()
+
+        <div id="Progress" class="overlay" style="display:none">
+            <div class=" loader" style="top:50%; position:fixed;left:50%; z-index:20;"></div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <div class="col-md-2 col-xs-6">
+                    <h5><strong>The Company</strong></h5>
+                    <ul>
+                        <li><a href="#">Press Center</a></li>
+                        <li><a href="#">Feedback</a></li>
+                        <li><a href="#">Team</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <h5><strong>Important  Information</strong></h5>
+                    <ul>
+                        <li><a href="#">Sitemap</a></li>
+                        <li><a href="#">Terms And Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <h5><strong>API Partners</strong></h5>
+                    <ul>
+                        <li><a href="#">First partner</a></li>
+                        <li><a href="#">Second partner</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <h5><strong>Join Us</strong></h5>
+                    <ul>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Become a Partner</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <h5><strong>Pay Through</strong></h5>
+                    <div class="payment">
+                        <ul>
+                            <li><a><img src="@Url.Content("~/images/paypal_icon.png")" class="imgheight19"></a></li>
+                            <li><a><img src="@Url.Content("~/images/mastercard.png")" class="imgheight19"></a></li>
+                            <li><a><img src="@Url.Content("~/images/american-express.png")" class="imgheight19"></a></li>
+                            <li><a><img src="@Url.Content("~/images/visa.png")" class="imgheight19"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <h5><strong>Follow Us </strong></h5>
+                    <div class="social">
+                        <ul>
+                            <li><a href="#" target="_blank"><img src="@Url.Content("~/images/fb_icon.png")"></a></li>
+                            <li><a href="#" target="_blank"><img src="@Url.Content("~/images/g_plus_icon.png")"></a> </li>
+                            <li><a href="#" target="_blank"><img src="@Url.Content("~/images/twitter_icon.png")"></a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
